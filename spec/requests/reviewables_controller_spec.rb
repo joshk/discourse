@@ -12,6 +12,22 @@ describe ReviewablesController do
       put "/review/123/perform/approve.json"
       expect(response.code).to eq("403")
     end
+
+    it "denies managing" do
+      get "/review/manage.json"
+      expect(response.code).to eq("403")
+    end
+  end
+
+  context "regular user" do
+    before do
+      sign_in(Fabricate(:user))
+    end
+
+    it "does not allow managing" do
+      get "/review/manage.json"
+      expect(response.code).to eq("403")
+    end
   end
 
   context "when logged in" do
@@ -304,6 +320,17 @@ describe ReviewablesController do
         json_topic = json['reviewable_topics'].find { |rt| rt['id'] == post2.topic_id }
         expect(json_topic['stats']['count']).to eq(2)
         expect(json_topic['stats']['unique_users']).to eq(2)
+      end
+    end
+
+    context "#manage" do
+      it "renders the settings as JSON" do
+        get "/review/manage.json"
+        expect(response.code).to eq("200")
+        json = ::JSON.parse(response.body)
+        expect(json).to be_present
+
+        expect(1).to eq(2)
       end
     end
 

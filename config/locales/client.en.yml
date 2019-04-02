@@ -359,9 +359,10 @@ en:
         placeholder: "type the message title here"
 
     review:
+      manage: "Manage"
       moderation_history: "Moderation History"
-      view_all: "view all"
-      grouped_by_topic: "grouped by topic"
+      view_all: "View All"
+      grouped_by_topic: "Grouped by Topic"
       none: "There are no items to review."
       view_pending: "view pending"
       topic_has_pending:

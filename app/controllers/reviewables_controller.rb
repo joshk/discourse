@@ -143,6 +143,13 @@ class ReviewablesController < ApplicationController
     end
   end
 
+  def manage
+    raise Discourse::InvalidAccess.new unless current_user.admin?
+
+    post_action_types = PostActionType.where(id: PostActionType.flag_types.values)
+    render_serialized({ score_bonuses: post_action_types }, ReviewableSettingsSerializer)
+  end
+
 protected
 
   def find_reviewable
