@@ -116,7 +116,6 @@ class User < ActiveRecord::Base
   after_create :set_random_avatar
   after_create :ensure_in_trust_level_group
   after_create :set_default_categories_preferences
-  after_create :create_reviewable
 
   before_save :update_username_lower
   before_save :ensure_password_is_hashed
@@ -898,10 +897,15 @@ class User < ActiveRecord::Base
     else
       self.update!(active: true)
     end
+    create_reviewable
   end
 
-  def deactivate
+  def deactivate(performed_by)
     self.update!(active: false)
+
+    if reviewable = ReviewableUser.pending.find_by(target: self)
+      reviewable.perform(performed_by, :reject)
+    end
   end
 
   def change_trust_level!(level, opts = nil)

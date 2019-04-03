@@ -3,7 +3,11 @@ require 'rails_helper'
 RSpec.describe ReviewableUser, type: :model do
 
   let(:moderator) { Fabricate(:moderator) }
-  let(:user) { Fabricate(:user) }
+  let(:user) do
+    user = Fabricate(:user)
+    user.activate
+    user
+  end
   let(:admin) { Fabricate(:admin) }
 
   context "actions_for" do
