@@ -22,6 +22,8 @@ env:
 addons:
   chrome: stable
   postgresql: 9.6
+  snaps:
+  - redis
   apt:
     update: true
     packages:
