@@ -39,7 +39,6 @@ rvm:
 services:
   - redis-server
 
-sudo: required
 dist: trusty
 
 cache:
