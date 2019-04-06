@@ -41,7 +41,7 @@ rvm:
 services:
   - redis-server
 
-dist: trusty
+dist: xenial
 
 cache:
   apt: true
